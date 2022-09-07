@@ -9,62 +9,76 @@ class Program
 {
     static void Main()
     {
-        Footman sniper = new Footman();
-        Mage Rubick = new Mage();
+        Footman footman = new Footman();
+        Mage mage = new Mage();
+        Archer archer = new Archer();
+        Blacksmith blacksmith = new Blacksmith();
+        Peasant peasant = new Peasant();
+        int am = 3;
+        
         bool Escape = false;
 
-        while (sniper.health > 0 && Rubick.health > 0)
+        while (footman.health > 0 && mage.health > 0)
         {
-            /*Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            while (true)
-            {
-                TimeSpan timeSpan = TimeSpan.FromSeconds(Convert.ToInt32(stopwatch.Elapsed.TotalSeconds));
-                Console.Write(timeSpan.ToString("c"));
-                Console.Write('\r');
-            }*/
-            Console.WriteLine("Здоровье героя - " + sniper.health + "\nЗдоровье врага - " + Rubick.health);
-            Console.WriteLine("\nВыберите действие героя:\n1.Атаковать\n2.Восстановить Здоровье\n3.Использовать супер-умение\n4.Попытка убежать\n");
+            Console.WriteLine($"Здоровье героя - {footman.health}\nЗдоровье врага - {mage.health}");
+            Console.WriteLine($"\nВыберите действие героя:\n1.Атаковать\n2.Восстановить Здоровье\n3.Использовать супер-умение\n4.Попытка убежать\n5.Upgrade");
 
             string UserChoose = Console.ReadLine();
             int pseudoRand = new Random().Next(1, 3);
+            Console.Clear();
 
             if (UserChoose == "1")
             {
-                sniper.Attack(Rubick);
-                Rubick.Attack(sniper);
-                sniper.health += sniper.Armor;
-                Console.WriteLine("Вы нанесли урона - " + sniper.Damage + "\nВраг нанес урон по вам - " + Rubick.Damage);
+                /*if(pseudoRand > 1)
+                {*/
+                    footman.Attack(mage);
+                    mage.Attack(footman);
+                /*}
+                else
+                {
+                    mage.Bolt(footman);
+                    footman.Attack(mage);
+                    mage.Mana -= mage.ManaCost;
+                    Console.WriteLine("Оставшая Мана - " + mage.Mana);
+                }*/
+                
+                footman.health += footman.Armor;
+                Console.WriteLine($"Вы нанесли урона - {footman.Damage}\nВраг нанес урон по вам - {mage.Damage}");
             }
             if (UserChoose == "2")
             {
-                
                 if (pseudoRand > 1)
                 {
-                    Console.WriteLine("Вам удалось выпить целебный напиток!");
-                    sniper.Heal(sniper);
+                    Console.WriteLine($"Вам удалось выпить целебный напиток!");
+                    footman.Heal(footman);
                 }
                 else
                 {
-                    Console.WriteLine("Враг воспользовался вашей беспомощностью во время битвы и нанес урон сквозь броню - " + Rubick.Damage);
-                    sniper.health -= Rubick.Damage;
+                    Console.WriteLine("Враг воспользовался вашей беспомощностью во время битвы и нанес урон сквозь броню - " + mage.Damage);
+                    footman.health -= mage.Damage;
                 }
             }
             if (UserChoose == "3")
             {
                 Console.WriteLine("Ваш урон увеличен на 2 ед. на 2 атаки");
-                sniper.Damage += 2;
+                footman.Damage += 2;
             }
-            if (UserChoose == "4")
+            /*if (UserChoose == "4")
             {
-                if(sniper.moveSpeed < Rubick.moveSpeed) { Escape = false; }
-                else { Rubick.health = 0; Escape = true ; }
+                if(footman.moveSpeed < mage.moveSpeed) { Escape = false; }
+                else { mage.health = 0; Escape = true ; }
+            }*/
+            if (UserChoose == "5")
+            {
+                
+                blacksmith.Upgrade(footman);
+                Console.WriteLine($"Damage is - {footman.Damage}\nyou have - {am--} upgrades");
             }
             if (UserChoose == "test")
             {
-                Rubick.Damage += 1000;
-                Rubick.health += 1000;
-                Rubick.Armor += 1000;
+                mage.Damage += 1000;
+                mage.health += 1000;
+                mage.Armor += 1000;
             }
             
         }
@@ -74,14 +88,24 @@ class Program
         {
             Console.WriteLine("Ты убежал!");
         }
-        else if (sniper.health > 0)
+        else if (footman.health > 0)
         {
-            Console.WriteLine("You are winner");
+            mage.health = 0;
+            Console.WriteLine("You are winner\nLast hp enemy is - " + mage.health);
         }
         
         else
         {
-            Console.WriteLine("You lose");
+            footman.health = 0;
+            Console.WriteLine("You lose\nYour last hp is - " + footman.health);
         }
     }
 }
+/*Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            while (true)
+            {
+                TimeSpan timeSpan = TimeSpan.FromSeconds(Convert.ToInt32(stopwatch.Elapsed.TotalSeconds));
+                Console.Write(timeSpan.ToString("c"));
+                Console.Write('\r');
+            }*/

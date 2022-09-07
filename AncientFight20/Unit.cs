@@ -14,12 +14,19 @@ namespace AncientFight20
         public int Mana;
         public int Armor;
         public int ManaCost;
+        public int maxHealth;
+        public int ArrowCount;
+        public int range;
+        public string Name;
+        //static int HealAmount = 3;
+
 
         public Unit(int health, int moveSpeed, int Damage)
         {
             this.health = health;
             this.moveSpeed = moveSpeed;
             this.Damage = Damage;
+            this.maxHealth = maxHealth;
             this.Mana = Mana;
             this.Armor = Armor;
         }
@@ -29,7 +36,14 @@ namespace AncientFight20
         }
         public void Heal(Unit unit)
         {
-            unit.health += 80;
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+            else
+            {
+                health += 80;
+            }
         }
     }
 }

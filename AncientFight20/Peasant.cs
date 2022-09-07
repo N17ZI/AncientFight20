@@ -11,6 +11,7 @@ namespace AncientFight20
     {
         public Peasant() : base(500, 100, 3)
         {
+            Name = "peasant";
             health = 500;
             moveSpeed = 100;
             Damage = 3;
