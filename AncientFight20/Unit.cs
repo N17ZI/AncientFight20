@@ -18,7 +18,6 @@ namespace AncientFight20
         public int ArrowCount;
         public int range;
         public string Name;
-        //static int HealAmount = 3;
 
 
         public Unit(int health, int moveSpeed, int Damage)

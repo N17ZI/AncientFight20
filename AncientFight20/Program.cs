@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 using AncientFight20;
 class Program
 {
+    public delegate void MyDelegate(string msg);
     static void Main()
     {
+        
         Footman footman = new Footman();
         Mage mage = new Mage();
         Archer archer = new Archer();
         Blacksmith blacksmith = new Blacksmith();
         Peasant peasant = new Peasant();
         int am = 3;
-        
-        bool Escape = false;
 
         while (footman.health > 0 && mage.health > 0)
         {
             Console.WriteLine($"Здоровье героя - {footman.health}\nЗдоровье врага - {mage.health}");
-            Console.WriteLine($"\nВыберите действие героя:\n1.Атаковать\n2.Восстановить Здоровье\n3.Использовать супер-умение\n4.Попытка убежать\n5.Upgrade");
+            Console.WriteLine($"\nВыберите действие героя:\n1.Атаковать\n2.Восстановить Здоровье\n5.Upgrade");
 
             string UserChoose = Console.ReadLine();
             int pseudoRand = new Random().Next(1, 3);
@@ -31,8 +31,13 @@ class Program
             {
                 /*if(pseudoRand > 1)
                 {*/
-                    footman.Attack(mage);
+                    //footman.Attack(mage);
                     mage.Attack(footman);
+                if (footman.health <= footman.health20)
+                {
+                    MyDelegate del = Footman.Rage;
+                    del($"damage is {footman.Damage}");
+                }
                 /*}
                 else
                 {
@@ -41,7 +46,7 @@ class Program
                     mage.Mana -= mage.ManaCost;
                     Console.WriteLine("Оставшая Мана - " + mage.Mana);
                 }*/
-                
+
                 footman.health += footman.Armor;
                 Console.WriteLine($"Вы нанесли урона - {footman.Damage}\nВраг нанес урон по вам - {mage.Damage}");
             }
@@ -58,16 +63,6 @@ class Program
                     footman.health -= mage.Damage;
                 }
             }
-            if (UserChoose == "3")
-            {
-                Console.WriteLine("Ваш урон увеличен на 2 ед. на 2 атаки");
-                footman.Damage += 2;
-            }
-            /*if (UserChoose == "4")
-            {
-                if(footman.moveSpeed < mage.moveSpeed) { Escape = false; }
-                else { mage.health = 0; Escape = true ; }
-            }*/
             if (UserChoose == "5")
             {
                 
@@ -84,11 +79,7 @@ class Program
         }
 
 
-        if (Escape == true)
-        {
-            Console.WriteLine("Ты убежал!");
-        }
-        else if (footman.health > 0)
+        if (footman.health > 0)
         {
             mage.health = 0;
             Console.WriteLine("You are winner\nLast hp enemy is - " + mage.health);
